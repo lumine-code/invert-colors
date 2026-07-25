@@ -1,0 +1,18 @@
+{
+  "menu": [
+    {
+      "label": "Packages",
+      "submenu": [
+        {
+          "label": "Invert Colors",
+          "submenu": [
+            { "label": "Invert Workspace", "command": "invert-colors:workspace" },
+            { "label": "Invert Editor", "command": "invert-colors:editor" },
+            { "label": "Invert Images", "command": "invert-colors:image" },
+            { "label": "Invert PDF Viewer", "command": "invert-colors:pdfviewer" }
+          ]
+        }
+      ]
+    }
+  ]
+}

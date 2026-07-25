@@ -1,81 +1,33 @@
 {
   "name": "invert-colors",
-  "main": "./lib/main.js",
-  "version": "0.5.0",
+  "author": "lumine-code",
   "description": "Invert view colors for images, editor, and PDF viewer",
+  "repository": "https://github.com/lumine-code/invert-colors",
+  "bugs": {
+    "url": "https://github.com/lumine-code/invert-colors/issues"
+  },
   "keywords": [
     "invert",
     "colors",
     "image",
     "dark-mode"
   ],
-  "repository": "https://github.com/asiloisad/pulsar-invert-colors",
+  "version": "1.0.0",
   "license": "MIT",
   "engines": {
     "atom": ">=1.0.0 <2.0.0"
   },
-  "configSchema": {
-    "workspaceState": {
-      "title": "Workspace state",
-      "description": "Invert Colors of whole workspace",
-      "type": "boolean",
-      "default": false,
-      "order": 1
-    },
-    "workspaceStatusIcon": {
-      "title": "Workspace status icon",
-      "description": "Show toggle button in the status bar",
-      "type": "boolean",
-      "default": false,
-      "order": 2
-    },
-    "editorState": {
-      "title": "Editor state",
-      "description": "Invert Colors of text editors",
-      "type": "boolean",
-      "default": false,
-      "order": 3
-    },
-    "editorStatusIcon": {
-      "title": "Editor status icon",
-      "description": "Show toggle button in the status bar",
-      "type": "boolean",
-      "default": false,
-      "order": 4
-    },
-    "imageState": {
-      "title": "Image state",
-      "description": "Invert colors of images",
-      "type": "boolean",
-      "default": false,
-      "order": 5
-    },
-    "imageStatusIcon": {
-      "title": "Image status icon",
-      "description": "Show toggle button in the status bar",
-      "type": "boolean",
-      "default": false,
-      "order": 6
-    },
-    "pdfviewerState": {
-      "title": "PDF viewer state",
-      "description": "Invert Colors of pdf-viewer instances",
-      "type": "boolean",
-      "default": false,
-      "order": 7
-    },
-    "pdfviewerStatusIcon": {
-      "title": "PDF viewer status icon",
-      "description": "Show toggle button in the status bar",
-      "type": "boolean",
-      "default": false,
-      "order": 8
-    }
+  "main": "./lib/main.js",
+  "scripts": {
+    "test": "cd ../lumine && npm run test:only -- ../invert-colors/spec",
+    "lint": "eslint . --max-warnings 0",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   },
   "consumedServices": {
-    "pdf-viewer": {
+    "pdf-view": {
       "versions": {
-        "^1.1.0": "consumePdfViewer"
+        "^1.1.0": "consumePdfView"
       }
     },
     "status-bar": {
@@ -83,5 +35,63 @@
         "^1.0.0": "consumeStatusBar"
       }
     }
+  },
+  "configSchema": {
+    "workspaceState": {
+      "title": "Workspace state",
+      "description": "Invert colors of whole workspace",
+      "type": "boolean",
+      "default": false
+    },
+    "workspaceStatusIcon": {
+      "title": "Workspace status icon",
+      "description": "Show toggle button in the status bar",
+      "type": "boolean",
+      "default": false
+    },
+    "editorState": {
+      "title": "Editor state",
+      "description": "Invert colors of text editors",
+      "type": "boolean",
+      "default": false
+    },
+    "editorStatusIcon": {
+      "title": "Editor status icon",
+      "description": "Show toggle button in the status bar",
+      "type": "boolean",
+      "default": false
+    },
+    "imageState": {
+      "title": "Image state",
+      "description": "Invert colors of images",
+      "type": "boolean",
+      "default": false
+    },
+    "imageStatusIcon": {
+      "title": "Image status icon",
+      "description": "Show toggle button in the status bar",
+      "type": "boolean",
+      "default": false
+    },
+    "pdfviewerState": {
+      "title": "PDF viewer state",
+      "description": "Invert colors of pdf-view instances",
+      "type": "boolean",
+      "default": false
+    },
+    "pdfviewerStatusIcon": {
+      "title": "PDF viewer status icon",
+      "description": "Show toggle button in the status bar",
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.8.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-n": "^18.2.2",
+    "globals": "^17.7.0",
+    "prettier": "^3.9.6"
   }
 }

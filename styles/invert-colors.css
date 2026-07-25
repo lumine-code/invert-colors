@@ -1,11 +1,9 @@
-@import "ui-variables";
-
 .invert-colors-transitions {
   transition: filter 200ms ease-in-out;
 
-  atom-text-editor,
-  img,
-  canvas {
+  & atom-text-editor,
+  & img,
+  & canvas {
     transition: filter 200ms ease-in-out;
   }
 }
@@ -20,21 +18,22 @@
 }
 
 .invert-colors-image {
-  img,
-  canvas {
+  & img,
+  & canvas {
     filter: invert(100%) !important;
   }
-  pulsar-terminal canvas,
-  atom-text-editor-minimap canvas,
-  .scrollmap canvas,
-  .simplemap canvas,
-  .hydrogen-next .data-explorer canvas {
+
+  & terminal-view canvas,
+  & atom-text-editor-minimap canvas,
+  & .scrollmap canvas,
+  & .simplemap canvas,
+  & .jove-repl .data-explorer canvas {
     filter: none !important;
   }
 }
 
 .invert-colors-editor {
-  atom-text-editor {
+  & atom-text-editor {
     filter: invert(100%) !important;
   }
 }
@@ -43,12 +42,13 @@
   filter: invert(100%) !important;
 }
 
-// Status bar buttons
+/* Status bar buttons */
 .status-bar .invert-colors-status {
-  .icon::before {
+  & .icon::before {
     margin-right: 0;
   }
-  .icon.active {
-    color: @text-color-warning;
+
+  & .icon.active {
+    color: var(--text-color-warning);
   }
 }
