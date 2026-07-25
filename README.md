@@ -1,6 +1,8 @@
 # invert-colors
 
-Invert view colors for images, editor, and PDF viewer. Useful for dark themes or reducing eye strain.
+Invert view colors for images, editors, and the PDF viewer.
+
+Useful for dark themes or reducing eye strain.
 
 ## Features
 
