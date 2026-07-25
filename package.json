@@ -27,7 +27,7 @@
   "consumedServices": {
     "pdf-view": {
       "versions": {
-        "^1.1.0": "consumePdfView"
+        "^1.0.0": "consumePdfView"
       }
     },
     "status-bar": {
