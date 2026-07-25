@@ -27,7 +27,7 @@
   & atom-text-editor-minimap canvas,
   & .scrollmap canvas,
   & .simplemap canvas,
-  & .jove-repl .data-explorer canvas {
+  & .jupyter-repl .data-explorer canvas {
     filter: none !important;
   }
 }
