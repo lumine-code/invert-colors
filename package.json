@@ -7,10 +7,11 @@
     "url": "https://github.com/lumine-code/invert-colors/issues"
   },
   "keywords": [
-    "invert",
-    "colors",
     "image",
-    "dark-mode"
+    "dark-mode",
+    "pdf",
+    "night",
+    "accessibility"
   ],
   "version": "1.0.0",
   "license": "MIT",
