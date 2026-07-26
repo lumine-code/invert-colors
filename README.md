@@ -28,8 +28,8 @@ Commands available in `atom-workspace`:
 
 ## Services
 
-- **pdf-view** (`^1.0.0`): consumed to observe PDF viewer instances and toggle their color inversion.
-- **status-bar** (`^1.0.0`): consumed to display the optional per-mode toggle buttons in the status bar.
+- **[pdf-view](https://lumine-code.github.io/docs.html#services/pdf-view)** (`^1.0.0`): consumed to observe PDF viewer instances and toggle their color inversion.
+- **[status-bar](https://lumine-code.github.io/docs.html#services/status-bar)** (`^1.0.0`): consumed to display the optional per-mode toggle buttons in the status bar.
 
 ## Contributing
 
