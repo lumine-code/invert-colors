@@ -18,6 +18,9 @@
   "engines": {
     "atom": ">=1.0.0 <2.0.0"
   },
+  "backgroundTips": [
+    "{% if keys['invert-colors:image'] %}You can invert the colors of the image you are viewing with {{ 'invert-colors:image' | keystroke }}{% else %}You can invert the colors of an image or a PDF to read it against a dark theme.{% endif %}"
+  ],
   "main": "./lib/main.js",
   "scripts": {
     "test": "lumine --test spec",
