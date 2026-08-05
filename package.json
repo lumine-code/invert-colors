@@ -22,6 +22,12 @@
     "{% if keys['invert-colors:image'] %}You can invert the colors of the image you are viewing with {{ 'invert-colors:image' | keystroke }}{% else %}You can invert the colors of an image or a PDF to read it against a dark theme.{% endif %}"
   ],
   "main": "./lib/main.js",
+  "files": [
+    "lib",
+    "menus",
+    "spec",
+    "styles"
+  ],
   "scripts": {
     "test": "lumine --test spec",
     "lint": "eslint . --max-warnings 0",
