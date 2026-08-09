@@ -1,7 +1,7 @@
 .invert-colors-transitions {
   transition: filter 200ms ease-in-out;
 
-  & atom-text-editor,
+  & lumine-text-editor,
   & img,
   & canvas {
     transition: filter 200ms ease-in-out;
@@ -10,7 +10,7 @@
 
 @media (prefers-reduced-motion: reduce) {
   .invert-colors-transitions,
-  .invert-colors-transitions atom-text-editor,
+  .invert-colors-transitions lumine-text-editor,
   .invert-colors-transitions img,
   .invert-colors-transitions canvas {
     transition: none;
@@ -24,7 +24,7 @@
   }
 
   & terminal-view canvas,
-  & atom-text-editor-minimap canvas,
+  & lumine-text-editor-minimap canvas,
   & .scrollmap canvas,
   & .simplemap canvas,
   & .jupyter-explorer canvas {
@@ -33,7 +33,7 @@
 }
 
 .invert-colors-editor {
-  & atom-text-editor {
+  & lumine-text-editor {
     filter: invert(100%) !important;
   }
 }

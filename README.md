@@ -19,7 +19,7 @@ To install `invert-colors` search for _invert-colors_ in the Install pane of the
 
 ## Commands
 
-Commands available in `atom-workspace`:
+Commands available in `lumine-workspace`:
 
 - `invert-colors:workspace`: toggle workspace inversion,
 - `invert-colors:editor`: toggle editor inversion,

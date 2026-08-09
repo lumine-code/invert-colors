@@ -1,16 +1,16 @@
-const { Disposable } = require("atom");
+const { Disposable } = require("lumine");
 
 describe("invert-colors", () => {
   let workspaceElement, mainModule;
 
   beforeEach(async () => {
-    workspaceElement = atom.views.getView(atom.workspace);
+    workspaceElement = lumine.views.getView(lumine.workspace);
     jasmine.attachToDOM(workspaceElement);
-    mainModule = (await atom.packages.activatePackage("invert-colors")).mainModule;
+    mainModule = (await lumine.packages.activatePackage("invert-colors")).mainModule;
   });
 
   function dispatch(command) {
-    atom.commands.dispatch(workspaceElement, command);
+    lumine.commands.dispatch(workspaceElement, command);
   }
 
   it("marks the body for animated transitions", () => {
@@ -20,11 +20,11 @@ describe("invert-colors", () => {
   describe("toggle commands", () => {
     it("toggles workspace inversion", () => {
       dispatch("invert-colors:workspace");
-      expect(atom.config.get("invert-colors.workspaceState")).toBe(true);
+      expect(lumine.config.get("invert-colors.workspaceState")).toBe(true);
       expect(document.body.classList.contains("invert-colors-workspace")).toBe(true);
 
       dispatch("invert-colors:workspace");
-      expect(atom.config.get("invert-colors.workspaceState")).toBe(false);
+      expect(lumine.config.get("invert-colors.workspaceState")).toBe(false);
       expect(document.body.classList.contains("invert-colors-workspace")).toBe(false);
     });
 
@@ -45,7 +45,7 @@ describe("invert-colors", () => {
     });
 
     it("applies state changes made directly through the config", () => {
-      atom.config.set("invert-colors.workspaceState", true);
+      lumine.config.set("invert-colors.workspaceState", true);
       expect(document.body.classList.contains("invert-colors-workspace")).toBe(true);
     });
   });
@@ -64,10 +64,10 @@ describe("invert-colors", () => {
     });
 
     it("applies the inversion state to observed viewers", () => {
-      atom.config.set("invert-colors.pdfviewerState", true);
+      lumine.config.set("invert-colors.pdfviewerState", true);
       expect(viewer.setColorInverted).toHaveBeenCalledWith(true);
 
-      atom.config.set("invert-colors.pdfviewerState", false);
+      lumine.config.set("invert-colors.pdfviewerState", false);
       expect(viewer.setColorInverted).toHaveBeenCalledWith(false);
     });
 
@@ -77,7 +77,7 @@ describe("invert-colors", () => {
     });
 
     it("restores viewers when the service is disposed", () => {
-      atom.config.set("invert-colors.pdfviewerState", true);
+      lumine.config.set("invert-colors.pdfviewerState", true);
       viewer.setColorInverted.calls.reset();
       disposable.dispose();
       expect(viewer.setColorInverted).toHaveBeenCalledWith(false);
@@ -86,27 +86,27 @@ describe("invert-colors", () => {
 
   describe("status bar integration", () => {
     beforeEach(async () => {
-      await atom.packages.activatePackage("status-bar");
+      await lumine.packages.activatePackage("status-bar");
     });
 
     it("shows a tile when the status icon setting is enabled", () => {
       expect(workspaceElement.querySelector(".invert-colors-status")).toBeNull();
-      atom.config.set("invert-colors.imageStatusIcon", true);
+      lumine.config.set("invert-colors.imageStatusIcon", true);
       expect(workspaceElement.querySelector(".invert-colors-status")).not.toBeNull();
 
-      atom.config.set("invert-colors.imageStatusIcon", false);
+      lumine.config.set("invert-colors.imageStatusIcon", false);
       expect(workspaceElement.querySelector(".invert-colors-status")).toBeNull();
     });
 
     it("toggles the state when the tile is clicked", () => {
-      atom.config.set("invert-colors.imageStatusIcon", true);
+      lumine.config.set("invert-colors.imageStatusIcon", true);
       const tile = workspaceElement.querySelector(".invert-colors-status");
       tile.click();
-      expect(atom.config.get("invert-colors.imageState")).toBe(true);
+      expect(lumine.config.get("invert-colors.imageState")).toBe(true);
       expect(tile.querySelector(".icon").classList.contains("active")).toBe(true);
 
       tile.click();
-      expect(atom.config.get("invert-colors.imageState")).toBe(false);
+      expect(lumine.config.get("invert-colors.imageState")).toBe(false);
       expect(tile.querySelector(".icon").classList.contains("active")).toBe(false);
     });
   });
