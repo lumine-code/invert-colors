@@ -15,7 +15,7 @@ Useful for dark themes or reducing eye strain.
 
 ## Installation
 
-To install `invert-colors` search for _invert-colors_ in the Install pane of the Lumine settings or run `lumine --install lumine-code/invert-colors`.
+To install `invert-colors` search for it in the Install pane of the Lumine settings, or run the command `lumine --install lumine-code/invert-colors`.
 
 ## Commands
 
@@ -28,8 +28,8 @@ Commands available in `lumine-workspace`:
 
 ## Services
 
-- **pdf-view** (`^1.0.0`): consumed to observe PDF viewer instances and toggle their color inversion.
-- **status-bar** (`^1.0.0`): consumed to display the optional per-mode toggle buttons in the status bar.
+- `pdf-view`: consumed to observe PDF viewer instances and toggle their color inversion.
+- `status-bar`: consumed to display the optional per-mode toggle buttons in the status bar.
 
 ## Contributing
 
