@@ -27,7 +27,8 @@
   & lumine-text-editor-minimap canvas,
   & .scrollmap canvas,
   & .simplemap canvas,
-  & .jupyter-explorer canvas {
+  & .jupyter-explorer canvas,
+  & .graviss canvas {
     filter: none !important;
   }
 }
