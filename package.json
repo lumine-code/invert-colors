@@ -83,13 +83,13 @@
       "type": "boolean",
       "default": false
     },
-    "pdfviewerState": {
+    "pdfViewState": {
       "title": "PDF viewer state",
       "description": "Invert colors of pdf-view instances",
       "type": "boolean",
       "default": false
     },
-    "pdfviewerStatusIcon": {
+    "pdfViewStatusIcon": {
       "title": "PDF viewer status icon",
       "description": "Show toggle button in the status bar",
       "type": "boolean",

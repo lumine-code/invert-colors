@@ -64,20 +64,20 @@ describe("invert-colors", () => {
     });
 
     it("applies the inversion state to observed viewers", () => {
-      lumine.config.set("invert-colors.pdfviewerState", true);
+      lumine.config.set("invert-colors.pdfViewState", true);
       expect(viewer.setColorInverted).toHaveBeenCalledWith(true);
 
-      lumine.config.set("invert-colors.pdfviewerState", false);
+      lumine.config.set("invert-colors.pdfViewState", false);
       expect(viewer.setColorInverted).toHaveBeenCalledWith(false);
     });
 
     it("applies inversion when toggled by command", () => {
-      dispatch("invert-colors:pdfviewer");
+      dispatch("invert-colors:pdf-view");
       expect(viewer.setColorInverted).toHaveBeenCalledWith(true);
     });
 
     it("restores viewers when the service is disposed", () => {
-      lumine.config.set("invert-colors.pdfviewerState", true);
+      lumine.config.set("invert-colors.pdfViewState", true);
       viewer.setColorInverted.calls.reset();
       disposable.dispose();
       expect(viewer.setColorInverted).toHaveBeenCalledWith(false);

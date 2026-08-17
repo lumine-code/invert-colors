@@ -24,7 +24,7 @@ Commands available in `lumine-workspace`:
 - `invert-colors:workspace`: toggle workspace inversion,
 - `invert-colors:editor`: toggle editor inversion,
 - `invert-colors:image`: toggle image inversion,
-- `invert-colors:pdfviewer`: toggle PDF viewer inversion.
+- `invert-colors:pdf-view`: toggle PDF viewer inversion.
 
 ## Services
 

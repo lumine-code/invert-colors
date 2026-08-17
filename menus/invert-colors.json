@@ -9,7 +9,7 @@
             { "label": "Invert Workspace", "command": "invert-colors:workspace" },
             { "label": "Invert Editor", "command": "invert-colors:editor" },
             { "label": "Invert Images", "command": "invert-colors:image" },
-            { "label": "Invert PDF Viewer", "command": "invert-colors:pdfviewer" }
+            { "label": "Invert PDF View", "command": "invert-colors:pdf-view" }
           ]
         }
       ]
