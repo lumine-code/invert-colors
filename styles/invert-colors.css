@@ -1,9 +1,19 @@
+/* Which canvases image inversion covers, stated as the list that inverts
+   rather than the list that does not. Every <img> is a picture, but a <canvas>
+   usually is not: in this ecosystem it draws a live view — the minimap, a
+   scrollmap strip, the terminal, the Graviss viewport, the jupyter-explorer
+   grid — whose colours already come from the theme and must not flip. Those
+   renderers outnumber the picture-drawing canvases and a new one arrives with
+   every package, so naming them all was a list that could only fall behind:
+   a renderer nobody here has heard of yet now stays correct unlisted, and a
+   picture that is missed is one rule away in a user's own styles.css. */
+
 .invert-colors-transitions {
   transition: filter 200ms ease-in-out;
 
   & lumine-text-editor,
   & img,
-  & canvas {
+  & :is(.jupyter-repl, .image-editor-dialog-backdrop) canvas {
     transition: filter 200ms ease-in-out;
   }
 }
@@ -12,24 +22,19 @@
   .invert-colors-transitions,
   .invert-colors-transitions lumine-text-editor,
   .invert-colors-transitions img,
-  .invert-colors-transitions canvas {
+  .invert-colors-transitions :is(.jupyter-repl, .image-editor-dialog-backdrop) canvas {
     transition: none;
   }
 }
 
 .invert-colors-image {
   & img,
-  & canvas {
+  /* A notebook result draws a plot into a canvas where it draws a matplotlib
+     figure into an <img>, so the two invert together. */
+  & .jupyter-repl canvas,
+  /* The image-editor dialogs preview the image being edited. */
+  & .image-editor-dialog-backdrop canvas {
     filter: invert(100%) !important;
-  }
-
-  & terminal-view canvas,
-  & lumine-text-editor-minimap canvas,
-  & .scrollmap canvas,
-  & .simplemap canvas,
-  & .jupyter-explorer canvas,
-  & .graviss canvas {
-    filter: none !important;
   }
 }
 

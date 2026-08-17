@@ -8,7 +8,7 @@ Useful for dark themes or reducing eye strain.
 
 - **Workspace inversion**: invert colors of the entire workspace.
 - **Editor inversion**: invert colors of text editors only.
-- **Image inversion**: invert colors of `<img>` and `<canvas>` elements.
+- **Image inversion**: invert colors of every `<img>`, and of the canvases that draw a picture rather than a live view.
 - **PDF support**: invert open and newly created pdf-view instances without changing pdf-view's global configuration.
 - **Animated transitions**: smoothly transition into and out of inverted modes while respecting reduced-motion preferences.
 - **Status bar icons**: optional per-mode toggle buttons in the status bar.
@@ -25,6 +25,16 @@ Commands available in `lumine-workspace`:
 - `invert-colors:editor`: toggle editor inversion,
 - `invert-colors:image`: toggle image inversion,
 - `invert-colors:pdf-view`: toggle PDF viewer inversion.
+
+## Customization
+
+Image inversion covers every `<img>`, and only the canvases it knows to be pictures — a canvas is far more often a live renderer such as the minimap, the terminal or a 3D viewport, whose colors already come from the theme. To invert one it does not know about, name it in `styles.css`:
+
+```css
+body.invert-colors-image .my-package canvas {
+  filter: invert(100%) !important;
+}
+```
 
 ## Services
 
