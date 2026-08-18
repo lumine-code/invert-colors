@@ -1,7 +1,7 @@
 {
   "name": "invert-colors",
   "author": "lumine-code",
-  "description": "Invert view colors for images, editors, and the PDF viewer.",
+  "description": "Invert view colors for images, editors, and the PDF view.",
   "repository": "https://github.com/lumine-code/invert-colors",
   "bugs": {
     "url": "https://github.com/lumine-code/invert-colors/issues"
@@ -84,13 +84,13 @@
       "default": false
     },
     "pdfViewState": {
-      "title": "PDF viewer state",
+      "title": "PDF view state",
       "description": "Invert colors of pdf-view instances",
       "type": "boolean",
       "default": false
     },
     "pdfViewStatusIcon": {
-      "title": "PDF viewer status icon",
+      "title": "PDF view status icon",
       "description": "Show toggle button in the status bar",
       "type": "boolean",
       "default": false

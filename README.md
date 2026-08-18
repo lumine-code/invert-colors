@@ -1,6 +1,6 @@
 # invert-colors
 
-Invert view colors for images, editors, and the PDF viewer.
+Invert view colors for images, editors, and the PDF view.
 
 Useful for dark themes or reducing eye strain.
 
@@ -24,7 +24,7 @@ Commands available in `lumine-workspace`:
 - `invert-colors:workspace`: toggle workspace inversion,
 - `invert-colors:editor`: toggle editor inversion,
 - `invert-colors:image`: toggle image inversion,
-- `invert-colors:pdf-view`: toggle PDF viewer inversion.
+- `invert-colors:pdf-view`: toggle PDF view inversion.
 
 ## Customization
 
@@ -38,7 +38,7 @@ body.invert-colors-image .my-package canvas {
 
 ## Services
 
-- `pdf-view`: consumed to observe PDF viewer instances and toggle their color inversion.
+- `pdf-view`: consumed to observe PDF view instances and toggle their color inversion.
 - `status-bar`: consumed to display the optional per-mode toggle buttons in the status bar.
 
 ## Contributing
