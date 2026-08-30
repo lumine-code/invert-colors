@@ -48,6 +48,32 @@ describe("invert-colors", () => {
       lumine.config.set("invert-colors.workspaceState", true);
       expect(document.body.classList.contains("invert-colors-workspace")).toBe(true);
     });
+
+    it("updates existing detached surface documents", async () => {
+      lumine.initializeDetachedPaneSurfaces({ force: true });
+      const item = {
+        element: document.createElement("div"),
+        getTitle: () => "Invert colors detached spec",
+      };
+      const tiledPane = lumine.workspace.getCenter().getActiveTiledPane();
+      tiledPane.addItem(item);
+      const detachedPane = await lumine.workspace.detachPaneItem(item, { show: false });
+      const surface = lumine.workspace.getWindowSurface(item);
+
+      try {
+        lumine.config.set("invert-colors.workspaceState", true);
+        expect(document.body.classList).toContain("invert-colors-workspace");
+        expect(surface.document.body.classList).toContain("invert-colors-workspace");
+
+        lumine.config.set("invert-colors.workspaceState", false);
+        expect(document.body.classList).not.toContain("invert-colors-workspace");
+        expect(surface.document.body.classList).not.toContain("invert-colors-workspace");
+      } finally {
+        if (detachedPane.isDetached()) await lumine.workspace.attachDetachedPane(detachedPane);
+        lumine.workspace.paneForItem(item)?.removeItem(item, true);
+        lumine.initializeDetachedPaneSurfaces();
+      }
+    });
   });
 
   describe("pdf-view service consumption", () => {
