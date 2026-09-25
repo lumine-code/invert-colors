@@ -18,9 +18,6 @@
   "engines": {
     "lumine": "^1.0.0"
   },
-  "backgroundTips": [
-    "{% if keys['invert-colors:image'] %}You can invert the colors of the image you are viewing with {{ 'invert-colors:image' | keystroke }}{% else %}You can invert the colors of an image or a PDF to read it against a dark theme.{% endif %}"
-  ],
   "main": "./lib/main.js",
   "files": [
     "lib",
@@ -33,6 +30,13 @@
     "lint": "eslint . --max-warnings 0",
     "format": "prettier --write .",
     "format:check": "prettier --check ."
+  },
+  "providedServices": {
+    "background-tips.provider": {
+      "versions": {
+        "1.0.0": "provideBackgroundTips"
+      }
+    }
   },
   "consumedServices": {
     "pdf-view": {
