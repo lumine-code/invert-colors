@@ -18,6 +18,9 @@
   "engines": {
     "lumine": "^1.0.0"
   },
+  "specPackages": [
+    "status-bar"
+  ],
   "main": "./lib/main.js",
   "files": [
     "lib",
