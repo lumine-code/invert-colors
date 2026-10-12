@@ -1,3 +1,4 @@
+const windowService = require("./helpers/window-service");
 const { Disposable } = require("lumine");
 
 describe("invert-colors", () => {
@@ -235,7 +236,7 @@ describe("invert-colors", () => {
     }
 
     function connect(service) {
-      const edge = mainModule.consumeStatusBar(service);
+      const edge = mainModule.consumeStatusBar(windowService(service));
       edges.push(edge);
       return edge;
     }

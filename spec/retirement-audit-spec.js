@@ -1,3 +1,4 @@
+const windowService = require("./helpers/window-service");
 const { Disposable, Emitter } = require("lumine");
 describe("Invert Colors retirement ownership audit", () => {
   let main, bar, leases, emitters, editor;
@@ -43,14 +44,14 @@ describe("Invert Colors retirement ownership audit", () => {
           if (armed) {
             armed = false;
             main.activate();
-            leases.push(main.consumeStatusBar(newer));
+            leases.push(main.consumeStatusBar(windowService(newer)));
             replacement = main.statusBars.get(newer);
           }
         };
         return tile;
       },
     };
-    leases.push(main.consumeStatusBar(older));
+    leases.push(main.consumeStatusBar(windowService(older)));
     armed = true;
     main.deactivate();
     expect(main.statusBars?.get(newer)).toBe(replacement);
