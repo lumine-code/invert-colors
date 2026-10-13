@@ -1,6 +1,32 @@
 {
   "menu": [
     {
+      "label": "View",
+      "submenu": [
+        {
+          "label": "Invert Colors",
+          "submenu": [
+            {
+              "label": "Workspace",
+              "command": "invert-colors:workspace"
+            },
+            {
+              "label": "Editors",
+              "command": "invert-colors:editor"
+            },
+            {
+              "label": "Images",
+              "command": "invert-colors:image"
+            },
+            {
+              "label": "PDF Views",
+              "command": "invert-colors:pdf-view"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "label": "Packages",
       "submenu": [
         {
