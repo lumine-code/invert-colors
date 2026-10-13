@@ -22,7 +22,9 @@
               "label": "PDF Views",
               "command": "invert-colors:pdf-view"
             }
-          ]
+          ],
+          "group": "appearance",
+          "order": 40
         }
       ]
     },
