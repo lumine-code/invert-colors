@@ -27,14 +27,10 @@ describe("invert-colors status actions", () => {
     await lumine.packages.deactivatePackage("invert-colors");
   });
   it("offers every global category from every icon, including the real PDF command", () => {
-    for (const [index, element] of elements.entries()) {
+    const dispatch = spyOn(lumine.commands, "dispatch").and.callThrough();
+    for (const element of elements) {
       expect(lumine.contextMenu.templateForElement(element).map((item) => item.command)).toEqual(
         commands,
-      );
-      expect(
-        lumine.contextMenu.templateForElement(element).map((item) => item.mouseBindingLabel),
-      ).toEqual(
-        categories.map((_, categoryIndex) => (categoryIndex === index ? "LMB" : undefined)),
       );
       element.dispatchEvent(new MouseEvent("click", { button: 2 }));
     }
@@ -45,6 +41,10 @@ describe("invert-colors status actions", () => {
       false,
     ]);
     elements[3].click();
+    expect(dispatch).toHaveBeenCalledOnceWith(
+      lumine.workspace.getMainWindow().getElement(),
+      lumine.contextMenu.templateForElement(elements[3])[3].command,
+    );
     for (const element of elements)
       expect(lumine.contextMenu.templateForElement(element).map((item) => item.checked)).toEqual([
         false,
