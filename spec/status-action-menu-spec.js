@@ -53,7 +53,8 @@ describe("invert-colors status actions", () => {
         true,
       ]);
     const [tooltip] = lumine.tooltips.findTooltips(elements[3]);
-    expect(tooltip.options.keyBindingCommand).toBeUndefined();
+    expect(tooltip.options.keyBindingCommand).toBe("invert-colors:pdf-view");
+    expect(tooltip.options.keyBindingExtra).toBeUndefined();
     expect(tooltip.getTitle()).toContain("All PDFs");
     expect(tooltip.getTitle()).toContain("Click to toggle inversion.");
   });
