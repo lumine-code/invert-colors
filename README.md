@@ -13,6 +13,10 @@ Useful for dark themes or reducing eye strain.
 - **Animated transitions**: smoothly transition into and out of inverted modes while respecting reduced-motion preferences.
 - **Status bar icons**: optional per-mode toggle buttons in the main window, with concise state tooltips and a menu containing every inversion category.
 
+![Invert the text editor colors independently of the surrounding interface.](.github/demo.png)
+
+![Invert the text editor colors independently of the surrounding interface.](.github/demo-2.png)
+
 ## Installation
 
 To install `invert-colors` search for it in the Install pane of the Lumine settings, or run the command `lumine --install lumine-code/invert-colors`.

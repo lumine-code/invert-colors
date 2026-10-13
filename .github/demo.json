@@ -1,0 +1,22 @@
+{
+  "title": "invert-colors",
+  "description": "Invert the text editor colors independently of the surrounding interface.",
+  "recordedOn": "2026-10-13",
+  "sourceRevision": "3932eeb0175ce180f9cb5b9a217da8123413fd6e",
+  "mode": "normal",
+  "fontSettings": "default",
+  "images": [
+    {
+      "file": "demo.png",
+      "label": "Invert the text editor colors independently of the surrounding interface.",
+      "width": 1100,
+      "height": 730
+    },
+    {
+      "file": "demo-2.png",
+      "label": "Invert the text editor colors independently of the surrounding interface.",
+      "width": 1100,
+      "height": 730
+    }
+  ]
+}
