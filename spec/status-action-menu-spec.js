@@ -27,9 +27,14 @@ describe("invert-colors status actions", () => {
     await lumine.packages.deactivatePackage("invert-colors");
   });
   it("offers every global category from every icon, including the real PDF command", () => {
-    for (const element of elements) {
+    for (const [index, element] of elements.entries()) {
       expect(lumine.contextMenu.templateForElement(element).map((item) => item.command)).toEqual(
         commands,
+      );
+      expect(
+        lumine.contextMenu.templateForElement(element).map((item) => item.mouseBindingLabel),
+      ).toEqual(
+        categories.map((_, categoryIndex) => (categoryIndex === index ? "LMB" : undefined)),
       );
       element.dispatchEvent(new MouseEvent("click", { button: 2 }));
     }
@@ -48,8 +53,9 @@ describe("invert-colors status actions", () => {
         true,
       ]);
     const [tooltip] = lumine.tooltips.findTooltips(elements[3]);
-    expect(tooltip.options.keyBindingCommand).toBe("invert-colors:pdf-view");
-    expect(tooltip.getTitle()).toContain("all pdfs");
+    expect(tooltip.options.keyBindingCommand).toBeUndefined();
+    expect(tooltip.getTitle()).toContain("All PDFs");
+    expect(tooltip.getTitle()).toContain("Click to toggle inversion.");
   });
   it("releases all four menus when the service lease ends", () => {
     lease.dispose();

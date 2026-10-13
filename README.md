@@ -11,7 +11,7 @@ Useful for dark themes or reducing eye strain.
 - **Image inversion**: invert colors of every `<img>`, and of the canvases that draw a picture rather than a live view.
 - **PDF support**: invert open and newly created pdf-view instances without changing pdf-view's global configuration.
 - **Animated transitions**: smoothly transition into and out of inverted modes while respecting reduced-motion preferences.
-- **Status bar icons**: optional per-mode toggle buttons with a menu containing every inversion category.
+- **Status bar icons**: optional per-mode toggle buttons with concise state tooltips and a menu containing every inversion category and the icon's mouse shortcut.
 
 ## Installation
 
