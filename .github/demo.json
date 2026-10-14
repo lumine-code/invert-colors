@@ -1,22 +1,73 @@
 {
   "title": "invert-colors",
   "description": "Invert the text editor colors independently of the surrounding interface.",
-  "recordedOn": "2026-10-13",
-  "sourceRevision": "3932eeb0175ce180f9cb5b9a217da8123413fd6e",
+  "recordedOn": "2026-10-14",
+  "sourceRevision": "8fff036daaf037ae5d9fa337eac1cff281c79c65",
+  "themeSourceRevision": "7fbd047a87ecf1367c896b19ff270cdc28d319f7",
   "mode": "normal",
   "fontSettings": "default",
+  "scenario": "demo.js",
+  "recipeHash": "774613d46555be68e8207f2691b2f0ce1ec1d02b30ee76b06c7c9394a5092307",
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "electron": "44.7.0",
+    "chrome": "152.0.7977.130",
+    "devicePixelRatio": 1,
+    "locale": "en-GB",
+    "fontFamily": "Fira Code, Menlo, DejaVu Sans Mono, Consolas, monospace",
+    "fontSize": 14,
+    "themes": ["one-day-syntax", "one-day-ui"]
+  },
+  "viewport": { "width": 1100, "height": 730 },
+  "cornerRadius": 10,
+  "sources": {
+    "editor": {
+      "revision": "8be8f86075ad93df038610d82b3ac6d99329957d",
+      "dirty": false,
+      "workingTreeHash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "package": {
+      "revision": "8fff036daaf037ae5d9fa337eac1cff281c79c65",
+      "dirty": false,
+      "workingTreeHash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "invert-colors": {
+      "revision": "8fff036daaf037ae5d9fa337eac1cff281c79c65",
+      "dirty": false,
+      "workingTreeHash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "language-javascript": {
+      "revision": "ae2e6968e3a349fb4d09ce53e339a0f8cce903aa",
+      "dirty": false,
+      "workingTreeHash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "one-theme": {
+      "revision": "7fbd047a87ecf1367c896b19ff270cdc28d319f7",
+      "dirty": false,
+      "workingTreeHash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    }
+  },
+  "fixtures": [
+    {
+      "file": "usage/inverted.js",
+      "sha256": "2a36953daadd1ae53070d0ff7ceab4624395fdb957104aa6e8ec92d785cadf1d"
+    }
+  ],
   "images": [
     {
       "file": "demo.png",
       "label": "Invert the text editor colors independently of the surrounding interface.",
       "width": 1100,
-      "height": 730
+      "height": 730,
+      "sha256": "64dbccbba1abe4e595787273daff72660d8501d9346657952c8d76fe207db968"
     },
     {
       "file": "demo-2.png",
       "label": "Invert the text editor colors independently of the surrounding interface.",
       "width": 1100,
-      "height": 730
+      "height": 730,
+      "sha256": "149a66d0ee16fdbb435a2c45071cd5cb99e0f80df2c17fcc6dd7e8032ed4049a"
     }
   ]
 }
