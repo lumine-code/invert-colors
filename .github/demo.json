@@ -2,7 +2,7 @@
   "title": "invert-colors",
   "description": "Track workspace, editor, image and PDF inversion in one status bar indicator.",
   "recordedOn": "2026-10-14",
-  "sourceRevision": "77bfd1ca75bbaf23ab3b1bc7e2840ff6c0987ca8",
+  "sourceRevision": "220aab943577830a038b505ea5578dacf74d1b42",
   "themeSourceRevision": "1570897f5fae0d1919808824aa8c1d17374fbb9d",
   "mode": "normal",
   "fontSettings": "default",
@@ -23,17 +23,17 @@
   "cornerRadius": 10,
   "sources": {
     "editor": {
-      "revision": "02395031e1773d045adef75d34ba1eb52d41ed52",
-      "dirty": true,
-      "workingTreeHash": "59e94928462ede3ea4cc37118dd10d22fca0e61ff1e8adf17636ba3a69911a89"
+      "revision": "a92b55f59b5170fcae27803406b92aaaa911ad8c",
+      "dirty": false,
+      "workingTreeHash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
     },
     "package": {
-      "revision": "77bfd1ca75bbaf23ab3b1bc7e2840ff6c0987ca8",
+      "revision": "220aab943577830a038b505ea5578dacf74d1b42",
       "dirty": false,
       "workingTreeHash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
     },
     "invert-colors": {
-      "revision": "77bfd1ca75bbaf23ab3b1bc7e2840ff6c0987ca8",
+      "revision": "220aab943577830a038b505ea5578dacf74d1b42",
       "dirty": false,
       "workingTreeHash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
     },
@@ -48,7 +48,7 @@
       "workingTreeHash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
     },
     "status-bar": {
-      "revision": "83c8dc950ffec714860e54c2b4520d355cc1ba78",
+      "revision": "857494a7c1453d9238baa9db346b224cc0a8ad50",
       "dirty": false,
       "workingTreeHash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
     }
@@ -65,14 +65,14 @@
       "label": "Track workspace, editor, image and PDF inversion in one status bar indicator.",
       "width": 1100,
       "height": 730,
-      "sha256": "24d46d6d7a25a5892a0295a78ec0cdc30a332b448a6b2c090f553126c0ce43af"
+      "sha256": "4089fa4ac1c54560aaa7c90ac10df8142f755d379ce6f1dff5e2b7b35f635b3c"
     },
     {
       "file": "demo-2.png",
       "label": "Invert text editor colors while the indicator shows the active category.",
       "width": 1100,
       "height": 730,
-      "sha256": "d947816dd4a07b51bd5230902b052030e9b4dd894cb52611fcaad05866ce9a26"
+      "sha256": "184f4aafb73de6b44b58224b1f85ebc528a064aa0a3373afa8978a6d60dff626"
     }
   ]
 }
