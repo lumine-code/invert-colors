@@ -2,7 +2,7 @@
   "title": "invert-colors",
   "description": "Track workspace, editor, image and PDF inversion in one status bar indicator.",
   "recordedOn": "2026-10-14",
-  "sourceRevision": "220aab943577830a038b505ea5578dacf74d1b42",
+  "sourceRevision": "fc87341631496dbd75e30006fe248d816892419b",
   "themeSourceRevision": "1570897f5fae0d1919808824aa8c1d17374fbb9d",
   "mode": "normal",
   "fontSettings": "default",
@@ -24,16 +24,16 @@
   "sources": {
     "editor": {
       "revision": "a92b55f59b5170fcae27803406b92aaaa911ad8c",
-      "dirty": false,
-      "workingTreeHash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      "dirty": true,
+      "workingTreeHash": "b9f056b3185a896d819210e59bcc4722d1e6a79533407b9118da3d6e4b723193"
     },
     "package": {
-      "revision": "220aab943577830a038b505ea5578dacf74d1b42",
+      "revision": "fc87341631496dbd75e30006fe248d816892419b",
       "dirty": false,
       "workingTreeHash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
     },
     "invert-colors": {
-      "revision": "220aab943577830a038b505ea5578dacf74d1b42",
+      "revision": "fc87341631496dbd75e30006fe248d816892419b",
       "dirty": false,
       "workingTreeHash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
     },
@@ -65,14 +65,14 @@
       "label": "Track workspace, editor, image and PDF inversion in one status bar indicator.",
       "width": 1100,
       "height": 730,
-      "sha256": "4089fa4ac1c54560aaa7c90ac10df8142f755d379ce6f1dff5e2b7b35f635b3c"
+      "sha256": "24fa2fa277658eed506fca2fd095150cda6d269fb2f17af9c5f262418d5856cd"
     },
     {
       "file": "demo-2.png",
       "label": "Invert text editor colors while the indicator shows the active category.",
       "width": 1100,
       "height": 730,
-      "sha256": "184f4aafb73de6b44b58224b1f85ebc528a064aa0a3373afa8978a6d60dff626"
+      "sha256": "b7479453b7d24721b6cc027480f87b5f435f10756d4f15bcef59c68c5a8ca212"
     }
   ]
 }
