@@ -73,6 +73,32 @@ describe("invert-colors", () => {
       lumine.config.set("invert-colors.workspaceState", true);
       expect(document.body.classList.contains("invert-colors-workspace")).toBe(true);
     });
+
+    it("disables every inversion mode without enabling modes that are already off", () => {
+      const categories = ["workspace", "editor", "image", "pdfView"];
+      const viewer = trackedViewer();
+      const edge = mainModule.consumePdfView(viewerService(viewer));
+      try {
+        for (const category of categories)
+          lumine.config.set(`invert-colors.${category}State`, true);
+        viewer.setColorInverted.calls.reset();
+        dispatch("invert-colors:disable-all");
+        expect(
+          categories.map((category) => lumine.config.get(`invert-colors.${category}State`)),
+        ).toEqual(categories.map(() => false));
+        for (const category of ["workspace", "editor", "image"])
+          expect(document.body.classList.contains(`invert-colors-${category}`)).toBeFalse();
+        expect(viewer.setColorInverted).toHaveBeenCalledOnceWith(false);
+
+        dispatch("invert-colors:disable-all");
+        expect(
+          categories.map((category) => lumine.config.get(`invert-colors.${category}State`)),
+        ).toEqual(categories.map(() => false));
+        expect(viewer.setColorInverted).toHaveBeenCalledOnceWith(false);
+      } finally {
+        edge.dispose();
+      }
+    });
   });
 
   describe("pdf-view service consumption", () => {
@@ -214,7 +240,7 @@ describe("invert-colors", () => {
     beforeEach(() => {
       containers = [];
       edges = [];
-      lumine.config.set("invert-colors.imageStatusIcon", true);
+      lumine.config.set("invert-colors.statusIcon", true);
     });
 
     afterEach(() => {
@@ -253,10 +279,10 @@ describe("invert-colors", () => {
       const tile = second.container.querySelector(".invert-colors-status");
       expect(tile).not.toBeNull();
       lumine.config.set("invert-colors.imageState", true);
-      expect(tile.querySelector(".icon").classList.contains("active")).toBe(true);
-      lumine.config.set("invert-colors.imageStatusIcon", false);
+      expect(tile.querySelector('[data-mode="image"]').classList.contains("active")).toBe(true);
+      lumine.config.set("invert-colors.statusIcon", false);
       expect(second.container.querySelector(".invert-colors-status")).toBeNull();
-      lumine.config.set("invert-colors.imageStatusIcon", true);
+      lumine.config.set("invert-colors.statusIcon", true);
       expect(second.container.querySelectorAll(".invert-colors-status").length).toBe(1);
     });
 
@@ -279,13 +305,13 @@ describe("invert-colors", () => {
         const tile = add(options);
         if (first) {
           first = false;
-          lumine.config.set("invert-colors.imageStatusIcon", false);
+          lumine.config.set("invert-colors.statusIcon", false);
         }
         return tile;
       };
       connect(service);
       expect(service.container.querySelector(".invert-colors-status")).toBeNull();
-      lumine.config.set("invert-colors.imageStatusIcon", true);
+      lumine.config.set("invert-colors.statusIcon", true);
       expect(service.container.querySelectorAll(".invert-colors-status").length).toBe(1);
     });
   });
@@ -297,23 +323,65 @@ describe("invert-colors", () => {
 
     it("shows a tile when the status icon setting is enabled", () => {
       expect(workspaceElement.querySelector(".invert-colors-status")).toBeNull();
-      lumine.config.set("invert-colors.imageStatusIcon", true);
-      expect(workspaceElement.querySelector(".invert-colors-status")).not.toBeNull();
+      lumine.config.set("invert-colors.statusIcon", true);
+      expect(workspaceElement.querySelectorAll(".invert-colors-status").length).toBe(1);
 
-      lumine.config.set("invert-colors.imageStatusIcon", false);
+      lumine.config.set("invert-colors.statusIcon", false);
       expect(workspaceElement.querySelector(".invert-colors-status")).toBeNull();
     });
 
-    it("toggles the state when the tile is clicked", () => {
-      lumine.config.set("invert-colors.imageStatusIcon", true);
-      const tile = workspaceElement.querySelector(".invert-colors-status");
-      tile.click();
-      expect(lumine.config.get("invert-colors.imageState")).toBe(true);
-      expect(tile.querySelector(".icon").classList.contains("active")).toBe(true);
+    it("preserves all states while hidden and restores their current indicators when shown", () => {
+      const categories = ["workspace", "editor", "image", "pdfView"];
+      lumine.config.set("invert-colors.workspaceState", true);
+      lumine.config.set("invert-colors.pdfViewState", true);
+      lumine.config.set("invert-colors.statusIcon", true);
+      const initial = workspaceElement.querySelector(".invert-colors-status");
+      expect(
+        [...initial.querySelectorAll(".invert-colors-segment.active")].map(
+          (item) => item.dataset.mode,
+        ),
+      ).toEqual(["workspace", "pdfView"]);
 
-      tile.click();
-      expect(lumine.config.get("invert-colors.imageState")).toBe(false);
-      expect(tile.querySelector(".icon").classList.contains("active")).toBe(false);
+      lumine.config.set("invert-colors.statusIcon", false);
+      expect(initial.isConnected).toBeFalse();
+      expect(lumine.tooltips.findTooltips(initial)).toEqual([]);
+      expect(lumine.contextMenu.templateForElement(initial)).toEqual([]);
+      expect(
+        categories.map((category) => lumine.config.get(`invert-colors.${category}State`)),
+      ).toEqual([true, false, false, true]);
+      lumine.config.set("invert-colors.workspaceState", false);
+      lumine.config.set("invert-colors.imageState", true);
+      expect(document.body.classList.contains("invert-colors-image")).toBeTrue();
+      lumine.config.set("invert-colors.statusIcon", true);
+      const restored = workspaceElement.querySelector(".invert-colors-status");
+      expect(restored).not.toBe(initial);
+      expect(workspaceElement.querySelectorAll(".invert-colors-status").length).toBe(1);
+      expect(
+        [...restored.querySelectorAll(".invert-colors-segment.active")].map(
+          (item) => item.dataset.mode,
+        ),
+      ).toEqual(["image", "pdfView"]);
+    });
+
+    it("releases the tile's resources on deactivation and recreates them for the current generation", async () => {
+      lumine.config.set("invert-colors.statusIcon", true);
+      lumine.config.set("invert-colors.editorState", true);
+      const retired = workspaceElement.querySelector(".invert-colors-status");
+      await lumine.packages.deactivatePackage("invert-colors");
+      expect(retired.isConnected).toBeFalse();
+      expect(retired.onclick).toBeNull();
+      expect(lumine.tooltips.findTooltips(retired)).toEqual([]);
+      expect(lumine.contextMenu.templateForElement(retired)).toEqual([]);
+
+      mainModule = (await lumine.packages.activatePackage("invert-colors")).mainModule;
+      const current = workspaceElement.querySelector(".invert-colors-status");
+      expect(current).not.toBe(retired);
+      expect(workspaceElement.querySelectorAll(".invert-colors-status").length).toBe(1);
+      expect(current.querySelector('[data-mode="editor"]').classList.contains("active")).toBeTrue();
+      retired.click();
+      expect(lumine.config.get("invert-colors.editorState")).toBeTrue();
+      current.click();
+      expect(lumine.config.get("invert-colors.editorState")).toBeFalse();
     });
   });
 });

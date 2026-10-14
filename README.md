@@ -11,7 +11,7 @@ Useful for dark themes or reducing eye strain.
 - **Image inversion**: invert colors of every `<img>`, and of the canvases that draw a picture rather than a live view.
 - **PDF support**: invert open and newly created pdf-view instances without changing pdf-view's global configuration.
 - **Animated transitions**: smoothly transition into and out of inverted modes while respecting reduced-motion preferences.
-- **Status bar icons**: optional per-mode toggle buttons in the main window, with concise state tooltips and a menu containing every inversion category.
+- **Status bar indicator**: an optional contrast icon with four independently highlighted segments and a menu containing every inversion category.
 
 ![Invert the text editor colors independently of the surrounding interface.](.github/demo.png)
 
@@ -28,11 +28,14 @@ Commands available in `lumine-workspace`:
 - `invert-colors:workspace`: toggle workspace inversion,
 - `invert-colors:editor`: toggle editor inversion,
 - `invert-colors:image`: toggle image inversion,
-- `invert-colors:pdf-view`: toggle PDF view inversion.
+- `invert-colors:pdf-view`: toggle PDF view inversion,
+- `invert-colors:disable-all`: disable every inversion category.
 
 ## Usage
 
-Left-click a status bar icon to toggle inversion for its category across the workspace. Right-click opens a menu with every inversion category.
+Enable the status bar indicator with `invert-colors.statusIcon`; it is hidden by default. Its four segments show the active inversion categories, clockwise from the top right: workspace, text editors, images, and PDFs.
+
+Left-click the indicator to disable all inversion. Right-click opens a menu with the four independent toggles and Disable All. Workspace inversion combines with the other categories, so enabling both workspace and editor inversion restores the text editors' original colors.
 
 ## Customization
 
@@ -47,7 +50,7 @@ body.invert-colors-image .my-package canvas {
 ## Services
 
 - `pdf-view`: consumed to observe PDF view instances and toggle their color inversion.
-- `status-bar`: consumed to display the optional per-mode toggle buttons in the status bar.
+- `status-bar`: consumed to display the optional segmented contrast indicator in the status bar.
 
 ## Contributing
 

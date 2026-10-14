@@ -54,15 +54,15 @@
     }
   },
   "configSchema": {
-    "workspaceState": {
-      "title": "Workspace state",
-      "description": "Invert colors of whole workspace",
+    "statusIcon": {
+      "title": "Status icon",
+      "description": "Show one status bar icon with an indicator for each inversion mode.",
       "type": "boolean",
       "default": false
     },
-    "workspaceStatusIcon": {
-      "title": "Workspace status icon",
-      "description": "Show toggle button in the status bar",
+    "workspaceState": {
+      "title": "Workspace state",
+      "description": "Invert colors of whole workspace",
       "type": "boolean",
       "default": false
     },
@@ -72,33 +72,15 @@
       "type": "boolean",
       "default": false
     },
-    "editorStatusIcon": {
-      "title": "Editor status icon",
-      "description": "Show toggle button in the status bar",
-      "type": "boolean",
-      "default": false
-    },
     "imageState": {
       "title": "Image state",
       "description": "Invert colors of images",
       "type": "boolean",
       "default": false
     },
-    "imageStatusIcon": {
-      "title": "Image status icon",
-      "description": "Show toggle button in the status bar",
-      "type": "boolean",
-      "default": false
-    },
     "pdfViewState": {
       "title": "PDF view state",
       "description": "Invert colors of pdf-view instances",
-      "type": "boolean",
-      "default": false
-    },
-    "pdfViewStatusIcon": {
-      "title": "PDF view status icon",
-      "description": "Show toggle button in the status bar",
       "type": "boolean",
       "default": false
     }

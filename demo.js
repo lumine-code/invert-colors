@@ -1,45 +1,55 @@
 // Authentic package usage. Run with lumine/script/demo.js; fixtures stay in demo/.
 module.exports = {
   version: 1,
-  dependencies: ["language-javascript"],
+  dependencies: ["language-javascript", "status-bar"],
   viewport: { width: 1100, height: 730 },
-  async before() {},
+  async before({ lumine }) {
+    lumine.config.set("invert-colors.statusIcon", true);
+    for (const category of ["workspace", "editor", "image", "pdfView"]) {
+      lumine.config.set(`invert-colors.${category}State`, false);
+    }
+  },
   async prepare(context) {
     const { state, open } = context;
     state.editor = await open("usage/inverted.js");
   },
   scenes: [
     {
-      id: "scene-1",
+      id: "status-indicator",
       file: "demo.png",
-      caption: "Invert the text editor colors independently of the surrounding interface.",
+      caption: "Track workspace, editor, image and PDF inversion in one status bar indicator.",
       timeout: 60000,
-      async run() {},
+      async run({ command }) {
+        command("invert-colors:disable-all");
+      },
       ready() {
         return Boolean(
-          document.querySelector("lumine-workspace")?.getBoundingClientRect().height > 0 &&
-          document.body.innerText.trim().length > 0,
+          document.querySelector(".invert-colors-status svg")?.getBoundingClientRect().height > 0 &&
+          document.querySelectorAll(".invert-colors-segment[data-mode]").length === 4 &&
+          document.querySelectorAll(".invert-colors-segment.active").length === 0 &&
+          !document.body.classList.contains("invert-colors-editor"),
         );
       },
     },
     {
-      id: "scene-2",
+      id: "editor-inversion",
       file: "demo-2.png",
-      caption: "Invert the text editor colors independently of the surrounding interface.",
+      caption: "Invert text editor colors while the indicator shows the active category.",
       timeout: 60000,
-      async run(context) {
-        const { lumine, state } = context;
-        {
-          lumine.commands.dispatch(lumine.views.getView(state.editor), "invert-colors:editor");
-        }
+      async run({ command }) {
+        command("invert-colors:editor");
       },
       ready() {
-        return Boolean(document.body.classList.contains("invert-colors-editor"));
+        return Boolean(
+          document.body.classList.contains("invert-colors-editor") &&
+          document.querySelector(".invert-colors-status svg")?.getBoundingClientRect().height > 0 &&
+          document.querySelectorAll(".invert-colors-segment.active").length === 1 &&
+          document.querySelector('.invert-colors-segment[data-mode="editor"].active'),
+        );
       },
     },
   ],
-  async cleanup(context) {
-    const { lumine } = context;
-    lumine.commands.dispatch(lumine.workspace.getElement(), "invert-colors:editor");
+  async cleanup({ command }) {
+    command("invert-colors:disable-all");
   },
 };

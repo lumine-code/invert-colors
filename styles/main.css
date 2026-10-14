@@ -48,13 +48,26 @@
   filter: invert(100%) !important;
 }
 
-/* Status bar buttons */
+/* One control, with four independently filled quarters. */
 .status-bar .invert-colors-status {
-  & .icon::before {
+  display: inline-flex;
+  align-items: center;
+
+  & .icon-glyph {
+    display: block;
     margin-right: 0;
   }
 
-  & .icon.active {
+  & .invert-colors-segment {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1;
+    stroke-linejoin: round;
+    color: var(--text-color-subtle);
+  }
+
+  & .invert-colors-segment.active {
+    fill: currentColor;
     color: var(--text-color-warning);
   }
 }

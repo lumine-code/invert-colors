@@ -15,7 +15,7 @@ describe("Invert Colors retirement ownership audit", () => {
     await lumine.packages.deactivatePackage("invert-colors");
     for (const emitter of emitters) emitter.dispose();
     editor.destroy();
-    for (const key of ["workspaceState", "workspaceStatusIcon", "pdfViewState"])
+    for (const key of ["workspaceState", "statusIcon", "pdfViewState"])
       lumine.config.unset("invert-colors." + key);
     document.body.classList.remove("invert-colors-workspace", "invert-colors-transitions");
   });
@@ -30,7 +30,7 @@ describe("Invert Colors retirement ownership audit", () => {
     return value;
   }
   it("keeps the replacement native tile and configured body state after old cleanup reactivates", () => {
-    lumine.config.set("invert-colors.workspaceStatusIcon", true);
+    lumine.config.set("invert-colors.statusIcon", true);
     lumine.config.set("invert-colors.workspaceState", true);
     let armed = false,
       replacement;
@@ -55,7 +55,7 @@ describe("Invert Colors retirement ownership audit", () => {
     armed = true;
     main.deactivate();
     expect(main.statusBars?.get(newer)).toBe(replacement);
-    expect(bar.element.contains(replacement.elements.workspace)).toBe(true);
+    expect(bar.element.contains(replacement.element)).toBe(true);
     expect(document.body.classList.contains("invert-colors-workspace")).toBe(true);
     expect(document.body.classList.contains("invert-colors-transitions")).toBe(true);
   });
