@@ -56,6 +56,8 @@
   & .icon-glyph {
     display: block;
     margin-right: 0;
+    /* Paint at 16px while retaining the status bar's 14px layout box. */
+    transform: scale(calc(16 / 14));
   }
 
   & .invert-colors-contrast-half {
