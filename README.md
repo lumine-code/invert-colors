@@ -13,9 +13,9 @@ Useful for dark themes or reducing eye strain.
 - **Animated transitions**: smoothly transition into and out of inverted modes while respecting reduced-motion preferences.
 - **Status bar indicator**: an optional contrast icon with four independently highlighted segments and a menu containing every inversion category.
 
-![Invert the text editor colors independently of the surrounding interface.](.github/demo.png)
+![Track workspace, editor, image and PDF inversion in one status bar indicator.](.github/demo.png)
 
-![Invert the text editor colors independently of the surrounding interface.](.github/demo-2.png)
+![Invert text editor colors while the indicator shows the active category.](.github/demo-2.png)
 
 ## Installation
 

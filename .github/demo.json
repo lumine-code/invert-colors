@@ -1,18 +1,18 @@
 {
   "title": "invert-colors",
-  "description": "Invert the text editor colors independently of the surrounding interface.",
+  "description": "Track workspace, editor, image and PDF inversion in one status bar indicator.",
   "recordedOn": "2026-10-14",
-  "sourceRevision": "8fff036daaf037ae5d9fa337eac1cff281c79c65",
-  "themeSourceRevision": "7fbd047a87ecf1367c896b19ff270cdc28d319f7",
+  "sourceRevision": "77bfd1ca75bbaf23ab3b1bc7e2840ff6c0987ca8",
+  "themeSourceRevision": "1570897f5fae0d1919808824aa8c1d17374fbb9d",
   "mode": "normal",
   "fontSettings": "default",
   "scenario": "demo.js",
-  "recipeHash": "774613d46555be68e8207f2691b2f0ce1ec1d02b30ee76b06c7c9394a5092307",
+  "recipeHash": "4dcbb0a349371de90dcebc2cc52dafc234871f63c1ceba7991c9f23ac5d5c7ce",
   "environment": {
     "platform": "win32",
     "arch": "x64",
-    "electron": "44.7.0",
-    "chrome": "152.0.7977.130",
+    "electron": "44.7.1",
+    "chrome": "152.0.7977.149",
     "devicePixelRatio": 1,
     "locale": "en-GB",
     "fontFamily": "Fira Code, Menlo, DejaVu Sans Mono, Consolas, monospace",
@@ -23,27 +23,32 @@
   "cornerRadius": 10,
   "sources": {
     "editor": {
-      "revision": "8be8f86075ad93df038610d82b3ac6d99329957d",
-      "dirty": false,
-      "workingTreeHash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      "revision": "02395031e1773d045adef75d34ba1eb52d41ed52",
+      "dirty": true,
+      "workingTreeHash": "59e94928462ede3ea4cc37118dd10d22fca0e61ff1e8adf17636ba3a69911a89"
     },
     "package": {
-      "revision": "8fff036daaf037ae5d9fa337eac1cff281c79c65",
+      "revision": "77bfd1ca75bbaf23ab3b1bc7e2840ff6c0987ca8",
       "dirty": false,
       "workingTreeHash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
     },
     "invert-colors": {
-      "revision": "8fff036daaf037ae5d9fa337eac1cff281c79c65",
+      "revision": "77bfd1ca75bbaf23ab3b1bc7e2840ff6c0987ca8",
       "dirty": false,
       "workingTreeHash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
     },
     "language-javascript": {
-      "revision": "ae2e6968e3a349fb4d09ce53e339a0f8cce903aa",
+      "revision": "7c60e9b041c23a0426c11a3e939883f8198cf528",
       "dirty": false,
       "workingTreeHash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
     },
     "one-theme": {
-      "revision": "7fbd047a87ecf1367c896b19ff270cdc28d319f7",
+      "revision": "1570897f5fae0d1919808824aa8c1d17374fbb9d",
+      "dirty": false,
+      "workingTreeHash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "status-bar": {
+      "revision": "83c8dc950ffec714860e54c2b4520d355cc1ba78",
       "dirty": false,
       "workingTreeHash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
     }
@@ -57,17 +62,17 @@
   "images": [
     {
       "file": "demo.png",
-      "label": "Invert the text editor colors independently of the surrounding interface.",
+      "label": "Track workspace, editor, image and PDF inversion in one status bar indicator.",
       "width": 1100,
       "height": 730,
-      "sha256": "64dbccbba1abe4e595787273daff72660d8501d9346657952c8d76fe207db968"
+      "sha256": "24d46d6d7a25a5892a0295a78ec0cdc30a332b448a6b2c090f553126c0ce43af"
     },
     {
       "file": "demo-2.png",
-      "label": "Invert the text editor colors independently of the surrounding interface.",
+      "label": "Invert text editor colors while the indicator shows the active category.",
       "width": 1100,
       "height": 730,
-      "sha256": "149a66d0ee16fdbb435a2c45071cd5cb99e0f80df2c17fcc6dd7e8032ed4049a"
+      "sha256": "d947816dd4a07b51bd5230902b052030e9b4dd894cb52611fcaad05866ce9a26"
     }
   ]
 }
