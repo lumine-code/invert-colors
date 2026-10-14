@@ -48,7 +48,7 @@
   filter: invert(100%) !important;
 }
 
-/* One control, with four independently filled quarters. */
+/* A contrast symbol surrounded by four independent state indicators. */
 .status-bar .invert-colors-status {
   display: inline-flex;
   align-items: center;
@@ -58,16 +58,26 @@
     margin-right: 0;
   }
 
+  & .invert-colors-contrast-half {
+    fill: var(--text-color);
+  }
+
+  & .invert-colors-contrast-outline {
+    fill: none;
+    stroke: var(--text-color);
+    stroke-width: 1;
+  }
+
   & .invert-colors-segment {
     fill: none;
     stroke: currentColor;
-    stroke-width: 1;
-    stroke-linejoin: round;
+    stroke-width: 1.25;
+    stroke-linecap: round;
     color: var(--text-color-subtle);
   }
 
   & .invert-colors-segment.active {
-    fill: currentColor;
+    stroke-width: 1.8;
     color: var(--text-color-warning);
   }
 }
