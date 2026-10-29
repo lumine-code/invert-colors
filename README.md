@@ -9,7 +9,7 @@ Useful for dark themes or reducing eye strain.
 - **Workspace inversion**: invert colors of the entire workspace.
 - **Editor inversion**: invert colors of text editors only.
 - **Image inversion**: invert colors of every `<img>`, and of the canvases that draw a picture rather than a live view.
-- **PDF support**: invert open and newly created pdf-view instances without changing pdf-view's global configuration.
+- **PDF support**: invert open and newly created PDF surfaces through their inversion providers.
 - **Animated transitions**: smoothly transition into and out of inverted modes while respecting reduced-motion preferences.
 - **Status bar indicator**: an optional contrast icon with four independently highlighted segments and a menu containing every inversion category.
 
@@ -49,7 +49,7 @@ body.invert-colors-image .my-package canvas {
 
 ## Services
 
-- `pdf-view`: consumed to observe PDF view instances and toggle their color inversion.
+- [invert-colors.provider](docs/invert-colors.provider.md): consumed to observe inversion targets and apply their category's color inversion state.
 - `status-bar`: consumed to display the optional segmented contrast indicator in the status bar.
 
 ## Contributing

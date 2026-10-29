@@ -23,6 +23,7 @@
   ],
   "main": "./lib/main.js",
   "files": [
+    "docs",
     "lib",
     "menus",
     "spec",
@@ -42,9 +43,9 @@
     }
   },
   "consumedServices": {
-    "pdf-view": {
+    "invert-colors.provider": {
       "versions": {
-        "^1.0.0": "consumePdfView"
+        "^1.0.0": "consumeInversionProvider"
       }
     },
     "status-bar": {
@@ -80,7 +81,7 @@
     },
     "pdfViewState": {
       "title": "PDF view state",
-      "description": "Invert colors of pdf-view instances",
+      "description": "Invert colors of PDF surfaces supplied by inversion providers.",
       "type": "boolean",
       "default": false
     }

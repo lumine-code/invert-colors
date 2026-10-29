@@ -20,7 +20,7 @@ describe("Invert Colors retirement ownership audit", () => {
     document.body.classList.remove("invert-colors-workspace", "invert-colors-transitions");
   });
   function provide(service) {
-    const lease = lumine.packages.serviceHub.provide("pdf-view", "1.0.0", service);
+    const lease = lumine.packages.serviceHub.provide("invert-colors.provider", "1.0.0", service);
     leases.push(lease);
     return lease;
   }
@@ -80,7 +80,8 @@ describe("Invert Colors retirement ownership audit", () => {
     const events = emitter();
     let subscription;
     provide({
-      observeViewers(callback) {
+      targetType: "pdf",
+      observeTargets(callback) {
         subscription = events.on("viewer", callback);
         spyOn(subscription, "dispose").and.callThrough();
         main.deactivate();
@@ -95,10 +96,10 @@ describe("Invert Colors retirement ownership audit", () => {
       element = document.createElement("div");
     let armed = false;
     const viewer = {
-      setColorInverted(value) {
+      setInverted(value) {
         element.dataset.inverted = String(value);
       },
-      onDidDispose(callback) {
+      onDidDestroy(callback) {
         const subscription = events.on("dispose", callback);
         return new Disposable(() => {
           subscription.dispose();
@@ -106,8 +107,9 @@ describe("Invert Colors retirement ownership audit", () => {
             armed = false;
             main.activate();
             leases.push(
-              main.consumePdfView({
-                observeViewers(callback) {
+              main.consumeInversionProvider({
+                targetType: "pdf",
+                observeTargets(callback) {
                   callback(viewer);
                   return new Disposable();
                 },
@@ -118,22 +120,23 @@ describe("Invert Colors retirement ownership audit", () => {
       },
     };
     provide({
-      observeViewers(callback) {
+      targetType: "pdf",
+      observeTargets(callback) {
         callback(viewer);
         return new Disposable();
       },
     });
     armed = true;
     main.deactivate();
-    expect(main.pdfViewers?.has(viewer)).toBe(true);
+    expect(main.inversionTargets?.has(viewer)).toBe(true);
     expect(element.dataset.inverted).toBe("true");
   });
   it("releases a real viewer lifetime listener returned after observing it retires the owner", () => {
     const events = emitter();
     let subscription;
     const viewer = {
-      setColorInverted() {},
-      onDidDispose(callback) {
+      setInverted() {},
+      onDidDestroy(callback) {
         subscription = events.on("dispose", callback);
         spyOn(subscription, "dispose").and.callThrough();
         main.deactivate();
@@ -141,7 +144,8 @@ describe("Invert Colors retirement ownership audit", () => {
       },
     };
     provide({
-      observeViewers(callback) {
+      targetType: "pdf",
+      observeTargets(callback) {
         callback(viewer);
         return new Disposable();
       },

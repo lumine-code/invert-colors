@@ -14,12 +14,12 @@ describe("invert-colors", () => {
     lumine.commands.dispatch(workspaceElement, command);
   }
 
-  function trackedViewer() {
+  function trackedTarget() {
     const listeners = new Set();
     return {
       listeners,
-      setColorInverted: jasmine.createSpy("setColorInverted"),
-      onDidDispose(callback) {
+      setInverted: jasmine.createSpy("setInverted"),
+      onDidDestroy(callback) {
         listeners.add(callback);
         return new Disposable(() => listeners.delete(callback));
       },
@@ -29,9 +29,10 @@ describe("invert-colors", () => {
     };
   }
 
-  function viewerService(...viewers) {
+  function targetService(...viewers) {
     return {
-      observeViewers(callback) {
+      targetType: "pdf",
+      observeTargets(callback) {
         for (const viewer of viewers) callback(viewer);
         return new Disposable();
       },
@@ -76,38 +77,39 @@ describe("invert-colors", () => {
 
     it("disables every inversion mode without enabling modes that are already off", () => {
       const categories = ["workspace", "editor", "image", "pdfView"];
-      const viewer = trackedViewer();
-      const edge = mainModule.consumePdfView(viewerService(viewer));
+      const viewer = trackedTarget();
+      const edge = mainModule.consumeInversionProvider(targetService(viewer));
       try {
         for (const category of categories)
           lumine.config.set(`invert-colors.${category}State`, true);
-        viewer.setColorInverted.calls.reset();
+        viewer.setInverted.calls.reset();
         dispatch("invert-colors:disable-all");
         expect(
           categories.map((category) => lumine.config.get(`invert-colors.${category}State`)),
         ).toEqual(categories.map(() => false));
         for (const category of ["workspace", "editor", "image"])
           expect(document.body.classList.contains(`invert-colors-${category}`)).toBeFalse();
-        expect(viewer.setColorInverted).toHaveBeenCalledOnceWith(false);
+        expect(viewer.setInverted).toHaveBeenCalledOnceWith(false);
 
         dispatch("invert-colors:disable-all");
         expect(
           categories.map((category) => lumine.config.get(`invert-colors.${category}State`)),
         ).toEqual(categories.map(() => false));
-        expect(viewer.setColorInverted).toHaveBeenCalledOnceWith(false);
+        expect(viewer.setInverted).toHaveBeenCalledOnceWith(false);
       } finally {
         edge.dispose();
       }
     });
   });
 
-  describe("pdf-view service consumption", () => {
+  describe("inversion provider consumption", () => {
     let viewer, disposable;
 
     beforeEach(() => {
-      viewer = { setColorInverted: jasmine.createSpy("setColorInverted") };
-      disposable = mainModule.consumePdfView({
-        observeViewers: (callback) => {
+      viewer = trackedTarget();
+      disposable = mainModule.consumeInversionProvider({
+        targetType: "pdf",
+        observeTargets: (callback) => {
           callback(viewer);
           return new Disposable(() => {});
         },
@@ -116,43 +118,43 @@ describe("invert-colors", () => {
 
     it("applies the inversion state to observed viewers", () => {
       lumine.config.set("invert-colors.pdfViewState", true);
-      expect(viewer.setColorInverted).toHaveBeenCalledWith(true);
+      expect(viewer.setInverted).toHaveBeenCalledWith(true);
 
       lumine.config.set("invert-colors.pdfViewState", false);
-      expect(viewer.setColorInverted).toHaveBeenCalledWith(false);
+      expect(viewer.setInverted).toHaveBeenCalledWith(false);
     });
 
     it("applies inversion when toggled by command", () => {
       dispatch("invert-colors:pdf-view");
-      expect(viewer.setColorInverted).toHaveBeenCalledWith(true);
+      expect(viewer.setInverted).toHaveBeenCalledWith(true);
     });
 
     it("restores viewers when the service is disposed", () => {
       lumine.config.set("invert-colors.pdfViewState", true);
-      viewer.setColorInverted.calls.reset();
+      viewer.setInverted.calls.reset();
       disposable.dispose();
-      expect(viewer.setColorInverted).toHaveBeenCalledWith(false);
+      expect(viewer.setInverted).toHaveBeenCalledWith(false);
     });
   });
 
-  describe("PDF service ownership", () => {
+  describe("inversion provider ownership", () => {
     it("removes only viewers owned by a disconnected edge", () => {
-      const first = trackedViewer();
-      const second = trackedViewer();
-      const firstEdge = mainModule.consumePdfView(viewerService(first));
-      const secondEdge = mainModule.consumePdfView(viewerService(second));
+      const first = trackedTarget();
+      const second = trackedTarget();
+      const firstEdge = mainModule.consumeInversionProvider(targetService(first));
+      const secondEdge = mainModule.consumeInversionProvider(targetService(second));
       try {
         lumine.config.set("invert-colors.pdfViewState", true);
-        second.setColorInverted.calls.reset();
+        second.setInverted.calls.reset();
         firstEdge.dispose();
 
-        expect(second.setColorInverted).not.toHaveBeenCalled();
-        expect(mainModule.pdfViewers.has(first)).toBe(false);
-        expect(mainModule.pdfViewers.has(second)).toBe(true);
+        expect(second.setInverted).not.toHaveBeenCalled();
+        expect(mainModule.inversionTargets.has(first)).toBe(false);
+        expect(mainModule.inversionTargets.has(second)).toBe(true);
         expect(first.listeners.size).toBe(0);
         lumine.config.set("invert-colors.pdfViewState", false);
         lumine.config.set("invert-colors.pdfViewState", true);
-        expect(second.setColorInverted).toHaveBeenCalledWith(true);
+        expect(second.setInverted).toHaveBeenCalledWith(true);
       } finally {
         firstEdge.dispose();
         secondEdge.dispose();
@@ -160,22 +162,22 @@ describe("invert-colors", () => {
     });
 
     it("shares a viewer and disposal listener until its final edge disconnects", () => {
-      const viewer = trackedViewer();
-      const service = viewerService(viewer, viewer);
-      const firstEdge = mainModule.consumePdfView(service);
-      const secondEdge = mainModule.consumePdfView(service);
+      const viewer = trackedTarget();
+      const service = targetService(viewer, viewer);
+      const firstEdge = mainModule.consumeInversionProvider(service);
+      const secondEdge = mainModule.consumeInversionProvider(service);
       try {
         lumine.config.set("invert-colors.pdfViewState", true);
         expect(viewer.listeners.size).toBe(1);
-        viewer.setColorInverted.calls.reset();
+        viewer.setInverted.calls.reset();
         firstEdge.dispose();
 
-        expect(viewer.setColorInverted).not.toHaveBeenCalled();
-        expect(mainModule.pdfViewers.has(viewer)).toBe(true);
+        expect(viewer.setInverted).not.toHaveBeenCalled();
+        expect(mainModule.inversionTargets.has(viewer)).toBe(true);
         expect(viewer.listeners.size).toBe(1);
         secondEdge.dispose();
-        expect(viewer.setColorInverted).toHaveBeenCalledOnceWith(false);
-        expect(mainModule.pdfViewers.has(viewer)).toBe(false);
+        expect(viewer.setInverted).toHaveBeenCalledOnceWith(false);
+        expect(mainModule.inversionTargets.has(viewer)).toBe(false);
         expect(viewer.listeners.size).toBe(0);
       } finally {
         firstEdge.dispose();
@@ -184,24 +186,25 @@ describe("invert-colors", () => {
     });
 
     it("releases disposal listeners when a viewer closes before its edges", () => {
-      const viewer = trackedViewer();
-      const firstEdge = mainModule.consumePdfView(viewerService(viewer));
-      const secondEdge = mainModule.consumePdfView(viewerService(viewer));
+      const viewer = trackedTarget();
+      const firstEdge = mainModule.consumeInversionProvider(targetService(viewer));
+      const secondEdge = mainModule.consumeInversionProvider(targetService(viewer));
       viewer.dispose();
-      viewer.setColorInverted.calls.reset();
+      viewer.setInverted.calls.reset();
       firstEdge.dispose();
       secondEdge.dispose();
 
-      expect(mainModule.pdfViewers.has(viewer)).toBe(false);
+      expect(mainModule.inversionTargets.has(viewer)).toBe(false);
       expect(viewer.listeners.size).toBe(0);
-      expect(viewer.setColorInverted).not.toHaveBeenCalled();
+      expect(viewer.setInverted).not.toHaveBeenCalled();
     });
 
     it("ignores a late viewer callback after its edge is disposed", () => {
-      const viewer = trackedViewer();
+      const viewer = trackedTarget();
       let publish;
-      const edge = mainModule.consumePdfView({
-        observeViewers(callback) {
+      const edge = mainModule.consumeInversionProvider({
+        targetType: "pdf",
+        observeTargets(callback) {
           publish = callback;
           return new Disposable();
         },
@@ -209,27 +212,127 @@ describe("invert-colors", () => {
       edge.dispose();
       publish(viewer);
 
-      expect(mainModule.pdfViewers.has(viewer)).toBe(false);
+      expect(mainModule.inversionTargets.has(viewer)).toBe(false);
       expect(viewer.listeners.size).toBe(0);
-      expect(viewer.setColorInverted).not.toHaveBeenCalled();
+      expect(viewer.setInverted).not.toHaveBeenCalled();
     });
 
     it("releases manual edges on deactivation without touching a new generation", async () => {
-      const viewer = trackedViewer();
-      const oldEdge = mainModule.consumePdfView(viewerService(viewer));
+      const viewer = trackedTarget();
+      const oldEdge = mainModule.consumeInversionProvider(targetService(viewer));
       await lumine.packages.deactivatePackage("invert-colors");
       expect(viewer.listeners.size).toBe(0);
       mainModule = (await lumine.packages.activatePackage("invert-colors")).mainModule;
-      const newEdge = mainModule.consumePdfView(viewerService(viewer));
+      const newEdge = mainModule.consumeInversionProvider(targetService(viewer));
       try {
-        viewer.setColorInverted.calls.reset();
+        viewer.setInverted.calls.reset();
         oldEdge.dispose();
 
-        expect(mainModule.pdfViewers.has(viewer)).toBe(true);
+        expect(mainModule.inversionTargets.has(viewer)).toBe(true);
         expect(viewer.listeners.size).toBe(1);
-        expect(viewer.setColorInverted).not.toHaveBeenCalled();
+        expect(viewer.setInverted).not.toHaveBeenCalled();
       } finally {
         newEdge.dispose();
+      }
+    });
+  });
+
+  describe("generic inversion provider contract", () => {
+    it("requires the provider contract and exposes no viewer-specific consumer", () => {
+      expect(() => mainModule.consumeInversionProvider(null)).toThrowError(TypeError);
+      expect(() => mainModule.consumeInversionProvider({ observeTargets() {} })).toThrowError(
+        TypeError,
+      );
+      expect(() => mainModule.consumeInversionProvider({ targetType: "pdf" })).toThrowError(
+        TypeError,
+      );
+      expect(mainModule.consumePdfView).toBeUndefined();
+    });
+
+    it("ignores unsupported target categories without registering an observer", () => {
+      const observeTargets = jasmine.createSpy("observeTargets");
+      const edge = mainModule.consumeInversionProvider({
+        targetType: "future-category",
+        observeTargets,
+      });
+      expect(observeTargets).not.toHaveBeenCalled();
+      expect(mainModule.inversionTargets.size).toBe(0);
+      expect(() => edge.dispose()).not.toThrow();
+    });
+
+    it("rejects a missing observation disposable and releases its entered targets", () => {
+      const target = trackedTarget();
+      lumine.config.set("invert-colors.pdfViewState", true);
+      expect(() =>
+        mainModule.consumeInversionProvider({
+          targetType: "pdf",
+          observeTargets(callback) {
+            callback(target);
+          },
+        }),
+      ).toThrowError(TypeError);
+      expect(mainModule.inversionTargets.has(target)).toBe(false);
+      expect(target.listeners.size).toBe(0);
+      expect(target.setInverted.calls.mostRecent().args).toEqual([false]);
+    });
+
+    it("ignores malformed targets emitted by an opener without propagating errors", () => {
+      const warning = spyOn(console, "warn");
+      let publish;
+      const edge = mainModule.consumeInversionProvider({
+        targetType: "pdf",
+        observeTargets(callback) {
+          publish = callback;
+          return new Disposable();
+        },
+      });
+      try {
+        expect(() => publish({})).not.toThrow();
+        expect(() => publish({ setInverted() {} })).not.toThrow();
+        expect(() => publish({ setInverted() {}, onDidDestroy() {} })).not.toThrow();
+        expect(mainModule.inversionTargets.size).toBe(0);
+        expect(warning).toHaveBeenCalledTimes(1);
+        const valid = trackedTarget();
+        publish(valid);
+        expect(mainModule.inversionTargets.has(valid)).toBe(true);
+      } finally {
+        edge.dispose();
+      }
+    });
+
+    it("contains a failing target setter during publication", () => {
+      spyOn(console, "warn");
+      const target = trackedTarget();
+      target.setInverted.and.throwError("Renderer failed");
+      let edge;
+      expect(() => {
+        edge = mainModule.consumeInversionProvider(targetService(target));
+      }).not.toThrow();
+      try {
+        expect(mainModule.inversionTargets.has(target)).toBe(false);
+        expect(target.listeners.size).toBe(0);
+      } finally {
+        edge?.dispose();
+      }
+    });
+
+    it("disposes a lifetime listener returned after the target synchronously destroys itself", () => {
+      const lifetime = new Disposable();
+      spyOn(lifetime, "dispose").and.callThrough();
+      const target = {
+        setInverted: jasmine.createSpy("setInverted"),
+        onDidDestroy(callback) {
+          callback();
+          return lifetime;
+        },
+      };
+      const edge = mainModule.consumeInversionProvider(targetService(target));
+      try {
+        expect(lifetime.dispose).toHaveBeenCalledTimes(1);
+        expect(mainModule.inversionTargets.has(target)).toBe(false);
+        expect(target.setInverted).not.toHaveBeenCalled();
+      } finally {
+        edge.dispose();
       }
     });
   });
