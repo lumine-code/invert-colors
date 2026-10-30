@@ -56,6 +56,13 @@ describe("invert-colors status actions", () => {
         .withContext(`menu state combination ${mask}`)
         .toEqual(enabled);
       expect(states()).toEqual(enabled);
+      expect(
+        commands.map((command) =>
+          lumine.commands.getCommandState(command, { target: window.getElement() }),
+        ),
+      )
+        .withContext(`application menu state combination ${mask}`)
+        .toEqual(enabled.map((checked) => ({ type: "checkbox", checked })));
     }
   });
 
