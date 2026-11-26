@@ -9,12 +9,18 @@
    picture that is missed is one rule away in a user's own styles.css. */
 
 .invert-colors-transitions {
-  transition: filter 200ms ease-in-out;
+  --invert-colors-filter-transition: filter 200ms ease-in-out;
+  transition: var(--invert-colors-filter-transition);
 
   & lumine-text-editor,
   & img,
   & :is(.jupyter-repl, .image-editor-dialog-backdrop) canvas {
-    transition: filter 200ms ease-in-out;
+    transition: var(--invert-colors-filter-transition);
+  }
+
+  & :where(.icon-button) > img {
+    transition:
+      var(--invert-colors-filter-transition), var(--icon-button-scale-transition, scale 0s);
   }
 }
 

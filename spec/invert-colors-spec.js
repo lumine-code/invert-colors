@@ -43,6 +43,29 @@ describe("invert-colors", () => {
     expect(document.body.classList.contains("invert-colors-transitions")).toBe(true);
   });
 
+  it("preserves the scale transition on an icon button image alongside the filter", () => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "icon-button";
+    button.setAttribute("aria-label", "About");
+    const icon = document.createElement("img");
+    icon.alt = "";
+    button.appendChild(icon);
+    const image = document.createElement("img");
+    image.alt = "";
+    jasmine.attachToDOM(button);
+    jasmine.attachToDOM(image);
+
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      expect(getComputedStyle(icon).transitionDuration).toBe("0s");
+      expect(getComputedStyle(image).transitionDuration).toBe("0s");
+    } else {
+      expect(getComputedStyle(icon).transitionProperty).toBe("filter, scale");
+      expect(getComputedStyle(icon).transitionDuration).toBe("0.2s, 0.15s");
+      expect(getComputedStyle(image).transitionProperty).toBe("filter");
+    }
+  });
+
   describe("toggle commands", () => {
     it("toggles workspace inversion", () => {
       dispatch("invert-colors:workspace");
